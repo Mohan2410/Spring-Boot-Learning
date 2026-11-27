@@ -1,5 +1,7 @@
 package com.mohan.spring_boot_learning.day01;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 class JobFinderBackend{
     public boolean isHiring(){
         return  false;
@@ -22,7 +24,11 @@ class JobFinderBackend{
     }
 }
 class JobFinderAPplication{ //extends JobFinderBackend{
-    JobFinderBackend backend;
+	JobFinderBackend backend;
+    
+    public JobFinderAPplication(JobFinderBackend backend) {
+    		this.backend = backend;
+    }
 	
     public boolean uploadResume(String file){
         return backend.uploadResume(file);
@@ -31,7 +37,7 @@ class JobFinderAPplication{ //extends JobFinderBackend{
 }
 public class User {
     public static void main(String[] args) {
-        JobFinderAPplication application = new JobFinderAPplication();
+        JobFinderAPplication application = new JobFinderAPplication(new JobFinderBackend());
         boolean uploadResume =  application.uploadResume("File: Spring,SpringBoot,Microservices");
         if (uploadResume) {
             System.out.println("After Shortlisting: HR will contact");
